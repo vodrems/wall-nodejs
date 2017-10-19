@@ -8,9 +8,26 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    test
+                    <form id="add_post" action="">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Example textarea</label>
+                            <textarea autofocus name="message" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <div id="posts">
+
+                    </div>
                 </div>
             </div>
         </div>
+        <script>
+            add_post.onsubmit = function (e) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/request', true);
+                xhr.send(JSON.stringify({"message": this.elements.message.value}));
+                e.preventDefault();
+            }
+        </script>
     </body>
 </html>
