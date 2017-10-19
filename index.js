@@ -8,5 +8,10 @@ http.createServer(function(req, res) {
         case '/':
             res.end(fs.readFileSync('index.html'));
             break;
+
+        case 'request':
+            console.log('request');
+            res.end('hi');
+            break;
     }
 }).listen(3000);

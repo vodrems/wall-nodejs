@@ -25,7 +25,9 @@
             add_post.onsubmit = function (e) {
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/request', true);
-                xhr.send(JSON.stringify({"message": this.elements.message.value}));
+                xhr.send('fwef'); //JSON.stringify({"message": this.elements.message.value})
+
+                console.log(xhr.responseText);
                 e.preventDefault();
             }
         </script>
