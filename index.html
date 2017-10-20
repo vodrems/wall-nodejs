@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+        <!--<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">-->
+        <!--<link rel="stylesheet" href="test.css">-->
     </head>
     <body>
         <div class="container">
@@ -10,10 +11,10 @@
                 <div class="col-md-6">
                     <form id="add_post" action="">
                         <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Example textarea</label>
-                            <textarea autofocus name="message" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <label for="post">Write</label>
+                            <textarea autofocus required name="post" class="form-control" id="post" rows="5"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <input type="submit" name="submit" class="btn btn-primary" value="Send">
                     </form>
                     <div id="posts">
 
@@ -23,11 +24,24 @@
         </div>
         <script>
             add_post.onsubmit = function (e) {
+                var message = this.elements.post;
+                var submit = this.elements.submit;
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/request', true);
-                xhr.send('fwef'); //JSON.stringify({"message": this.elements.message.value})
-
-                console.log(xhr.responseText);
+                xhr.open('POST', 'request', true);
+                xhr.send(JSON.stringify({"post": message.value}));
+                xhr.onreadystatechange = function() {
+                    if (xhr.status === 200) {
+                        alert(xhr.response);
+                        message.value = '';
+                        message.focus();
+                        submit.value = 'Send';
+                        submit.disabled = false;
+                    } else {
+                        alert('Server Error!');
+                    }
+                };
+                submit.value = 'Sending..';
+                submit.disabled = true;
                 e.preventDefault();
             }
         </script>
