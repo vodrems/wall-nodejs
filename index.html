@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <!--<link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
         <!--<link rel="stylesheet" href="test.css">-->
     </head>
     <body>
@@ -16,9 +16,9 @@
                         </div>
                         <input type="submit" name="submit" class="btn btn-primary" value="Send">
                     </form>
-                    <div id="posts">
+                    <ul id="posts">
 
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -29,20 +29,46 @@
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'request', true);
                 xhr.send(JSON.stringify({"post": message.value}));
+                /*
                 xhr.onreadystatechange = function() {
-                    if (xhr.status === 200) {
-                        alert(xhr.response);
-                        message.value = '';
-                        message.focus();
-                        submit.value = 'Send';
-                        submit.disabled = false;
-                    } else {
-                        alert('Server Error!');
+                    console.log('xhr.readyState', xhr.readyState);
+                    console.log('xhr.status', xhr.status);
+                    if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                            alert(xhr.response);
+                            message.value = '';
+                            message.focus();
+                            submit.value = 'Send';
+                            submit.disabled = false;
+                        } else {
+                            alert('Server Error!');
+                        }
                     }
                 };
                 submit.value = 'Sending..';
-                submit.disabled = true;
+                submit.disabled = true;*/
                 e.preventDefault();
+            }
+
+            subscribe();
+
+            function subscribe() {
+                var message = post;
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/subscribe', true);
+                xhr.onload = function() {
+                    console.log('xhr.readyState', xhr.readyState);
+                    console.log('xhr.status', xhr.status);
+                    console.log('xhr.responseText', xhr.responseText);
+                    message.value = '';
+                    message.focus();
+                    var li = document.createElement('li');
+                    li.textContent = xhr.responseText;
+                    posts.appendChild(li);
+
+                    subscribe();
+                };
+                xhr.send("");
             }
         </script>
     </body>
