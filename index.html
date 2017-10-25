@@ -14,7 +14,7 @@
                             <label for="post">Write</label>
                             <textarea autofocus required name="post" class="form-control" id="post" rows="5"></textarea>
                         </div>
-                        <input type="submit" name="submit" class="btn btn-primary" value="Send">
+                        <input type="submit" id="send" name="submit" class="btn btn-primary" value="Send">
                     </form>
                     <ul id="posts">
 
@@ -44,9 +44,10 @@
                             alert('Server Error!');
                         }
                     }
-                };
+                };*/
+                console.log('xhr', xhr);
                 submit.value = 'Sending..';
-                submit.disabled = true;*/
+                submit.disabled = true;
                 e.preventDefault();
             }
 
@@ -54,6 +55,7 @@
 
             function subscribe() {
                 var message = post;
+                var submit = document.getElementById("send");
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', '/subscribe', true);
                 xhr.onload = function() {
@@ -62,12 +64,21 @@
                     console.log('xhr.responseText', xhr.responseText);
                     message.value = '';
                     message.focus();
+                    submit.value = 'Send';
+                    submit.disabled = false;
                     var li = document.createElement('li');
                     li.textContent = xhr.responseText;
                     posts.appendChild(li);
 
                     subscribe();
                 };
+                xhr.onerror = function () {
+                    console.error('test onerror');
+                };
+                xhr.onabort = function () {
+                    console.error('test abrort');
+                };
+
                 xhr.send("");
             }
         </script>
