@@ -69,6 +69,11 @@
                     var li = document.createElement('li');
                     li.textContent = xhr.responseText;
                     posts.appendChild(li);
+                    if (xhr.responseText === '') {
+                        var li = document.createElement('li');
+                        li.textContent = xhr.responseText;
+                        posts.appendChild(li);
+                    }
 
                     subscribe();
                 };

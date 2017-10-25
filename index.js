@@ -42,4 +42,4 @@ http.createServer(function(req, res) {
             });
             break;
     }
-}).listen(3000);
+}).listen(process.env.PORT, process.env.IP);
