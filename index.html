@@ -24,56 +24,24 @@
         </div>
         <script>
             add_post.onsubmit = function (e) {
-                var message = this.elements.post;
-                var submit = this.elements.submit;
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', 'request', true);
-                xhr.send(JSON.stringify({"post": message.value}));
-                /*
-                xhr.onreadystatechange = function() {
-                    console.log('xhr.readyState', xhr.readyState);
-                    console.log('xhr.status', xhr.status);
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            alert(xhr.response);
-                            message.value = '';
-                            message.focus();
-                            submit.value = 'Send';
-                            submit.disabled = false;
-                        } else {
-                            alert('Server Error!');
-                        }
-                    }
-                };*/
-                console.log('xhr', xhr);
-                submit.value = 'Sending..';
-                submit.disabled = true;
+                xhr.send(JSON.stringify({
+                    "post": this.post.value
+                }));
+
                 e.preventDefault();
-            }
+            };
 
             subscribe();
 
             function subscribe() {
-                var message = post;
-                var submit = document.getElementById("send");
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', '/subscribe', true);
                 xhr.onload = function() {
-                    console.log('xhr.readyState', xhr.readyState);
-                    console.log('xhr.status', xhr.status);
-                    console.log('xhr.responseText', xhr.responseText);
-                    message.value = '';
-                    message.focus();
-                    submit.value = 'Send';
-                    submit.disabled = false;
                     var li = document.createElement('li');
                     li.textContent = xhr.responseText;
                     posts.appendChild(li);
-                    if (xhr.responseText === '') {
-                        var li = document.createElement('li');
-                        li.textContent = xhr.responseText;
-                        posts.appendChild(li);
-                    }
 
                     subscribe();
                 };

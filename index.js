@@ -24,7 +24,7 @@ http.createServer(function(req, res) {
             break;
 
         case '/subscribe':
-            posts.subscribe(res);
+            posts.subscribe(req, res);
             break;
 
         default:
@@ -42,4 +42,4 @@ http.createServer(function(req, res) {
             });
             break;
     }
-}).listen(process.env.PORT, process.env.IP);
+}).listen(process.env.PORT || 8080, process.env.IP || 'localhost');

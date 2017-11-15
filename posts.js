@@ -1,9 +1,12 @@
 var clients = [];
 
-module.exports.subscribe = function(res) {
-    console.log('subscribe');
+module.exports.subscribe = function(req, res) {
+    console.log("subscribe");
     clients.push(res);
-    res.end('');
+
+    res.on('close', function() {
+        clients.splice(clients.indexOf(res), 1);
+    });
 };
 
 module.exports.publish = function(message) {
@@ -14,3 +17,8 @@ module.exports.publish = function(message) {
 
     clients = [];
 };
+
+
+setInterval(function() {
+    console.log(clients.length);
+}, 2000);
