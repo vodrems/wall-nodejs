@@ -4,7 +4,6 @@ var url = require('url');
 var posts = require('./posts');
 
 http.createServer(function(req, res) {
-    console.log('working...');
 
     switch (req.url) {
         case '/':
@@ -31,12 +30,8 @@ http.createServer(function(req, res) {
             fs.readFile(__dirname + url.parse(req.url).href, function(err, content) {
                 if (err) console.log(err);
                 var mime = require('mime');
-
                 mime = mime.getType(url.parse(req.url).href);
-                /*console.log('mime', mime);
-                console.log('url', url.parse(req.url).href);
-                console.log('mime', mime);
-                */res.setHeader('Content-type', mime + "; charset=utf-8");
+                res.setHeader('Content-type', mime + "; charset=utf-8");
                 res.end(content)
 
             });

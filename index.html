@@ -45,11 +45,9 @@
 
                     subscribe();
                 };
-                xhr.onerror = function () {
-                    console.error('test onerror');
-                };
-                xhr.onabort = function () {
-                    console.error('test abrort');
+
+                xhr.onerror = xhr.onabort = function () {
+                    alert('Server Error! Please refresh page!')
                 };
 
                 xhr.send("");

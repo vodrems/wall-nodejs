@@ -1,7 +1,7 @@
 var clients = [];
 
 module.exports.subscribe = function(req, res) {
-    console.log("subscribe");
+
     clients.push(res);
 
     res.on('close', function() {
@@ -20,5 +20,5 @@ module.exports.publish = function(message) {
 
 
 setInterval(function() {
-    console.log(clients.length);
+    console.log('Now clients: ' + clients.length);
 }, 2000);
